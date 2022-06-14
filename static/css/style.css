@@ -11,6 +11,7 @@ li {
 }
 
 
+
 /* CSS BAR  */
 
 .bar {  
@@ -40,8 +41,6 @@ li {
     height:36%;
     padding-right: 10px;
     padding-top: 10px;
-
-
 }
 
 
@@ -118,7 +117,6 @@ li {
     color:white; 
     font-weight: 600;
     opacity: 1;
-    
 }
 
 .bar #bar-scroll > div > button:hover {
@@ -147,8 +145,6 @@ li {
     font-size: 14px;
 
 }
-
-
 
 
 ::-webkit-scrollbar {
@@ -340,10 +336,7 @@ input {
     min-height: 100vh;
 }
 
-#wrap-list > p { 
-    font-size: 14px;
-    line-height: 24px;     
-}
+
 
 #wrap-list > div,ul { 
     padding: 0px 12px;
@@ -355,7 +348,7 @@ input {
     font-weight:100;
     font-size: 12px;
     opacity: 0.6;
-    margin: 24px 0px;
+    margin: 8px 0px;
 }
 
 .title > h4:nth-child(1) {
@@ -482,15 +475,7 @@ input {
     font-size: 24px;
 }
 
-/* #play > div:nth-child(1) > i:nth-child(2) {
-    border: 1px solid white;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    display: flex;
-    justify-content: center;
-    align-items: fl;
-} */
+
 #play > div:nth-child(1) > i:hover {
     cursor: pointer;
 }
@@ -592,16 +577,18 @@ input[type="range"] {
 	height: 2px;
 	margin: 0 15px;
 }
+input[type="range"]:hover,button { 
+    cursor: pointer;
+}
 
 input[type="range"]::-webkit-slider-thumb{
 	-webkit-appearance: none;
-	height: 14px;
-	width: 14px;
+	height: 8px;
+	width: 8px;
 	background: #FF8A65;
 	border-radius: 50%;
 	cursor: pointer;
 }
-
 
 #next,#mute,#previous,#play-pause { 
     width: 42px;
