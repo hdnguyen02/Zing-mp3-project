@@ -28,6 +28,7 @@ li {
     font-weight: 600;
     padding: 16px 0px 55px 30px; 
     font-size: 13px;
+    z-index: 10;
 
 }
 
@@ -147,6 +148,9 @@ li {
 
 }
 
+
+
+
 ::-webkit-scrollbar {
     width: 6px;
     border-radius: 6px;
@@ -156,4 +160,457 @@ li {
     width: 6px;
     border-radius: 10px;
     background-color: gray; 
+}
+
+
+
+/* CONTROL  */
+
+.control { 
+    background-color: #120c1c;
+    height: 85px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    color: white;
+    text-align: center;
+    display: flex;
+    z-index: 20; 
+}
+
+
+
+
+.header { 
+    height: 60px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 240px;
+    background-color: #120c1c;
+    color: white;
+    text-align: center;
+    z-index:11;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 24px;
+
+}
+
+::placeholder { 
+    color: white;
+    font-size: 14px;
+
+}
+
+input { 
+    color: white;
+    font-size: 16px;
+}
+
+.header > div:nth-child(1) { 
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: space-between; 
+}
+
+.header > div:nth-child(1) > input { 
+    width: 30vw;  
+    border: none;
+    height: 40px;
+    border-radius: 22px;
+    outline: none;
+    padding: 0px 22px;
+    background-color: rgba(47,39,57,0.6);
+}
+
+.header > div:nth-child(1) > div > i { 
+    padding-left: 24px;
+    
+}
+
+.header > div:nth-child(2) { 
+    display: flex;
+    width: 50%;
+    justify-content: flex-end; 
+    padding-right: 24px;
+
+}
+
+.header > div:nth-child(2) > button { 
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color:rgba(47,39,57,0.6) ;
+    margin: 0px 4px;
+
+}
+
+.header > div:nth-child(2) > button:hover {
+    cursor: pointer;
+}
+
+.header > div:nth-child(2) > button > i { 
+    color: white;
+}
+
+#container-list { 
+    background-color: #170f23;
+    width: calc(100% - 240px);
+    height: calc(100vh - 85px - 60px); 
+    margin-top:60px;
+    margin-left: 240px;
+    color: white;
+    display: flex;
+    
+}
+
+#introduce { 
+    width: 350px; 
+    height: calc(100vh - 60px - 85px);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    z-index: 100;
+    top: 60px;
+    left: 240px;
+    background-color: #170f23;
+    color: white;
+
+
+}
+
+#wrap-image { 
+    position: relative;
+}
+
+#wrap-image:hover::after { 
+    cursor: pointer;
+    position: absolute;
+    transition: 4s;
+    content: '\f144';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    background-color:rgba(0, 0, 0, 0.6);
+    font-family: 'Font Awesome 5 Free';
+    top: 0;left: 0;right: 0; bottom: 0;
+     
+}
+
+#introduce > h2 { 
+    font-size: 20px;
+    font-weight: 700;
+    padding: 0px 12px;
+}
+
+#introduce > span { 
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+#introduce > button { 
+    background-color: #7200a1;
+    padding:10px 24px;
+    font-size: 14px;
+    color: white;
+    border-radius: 26px;
+}
+
+.image-top-100 {
+    width: 100%;
+}
+
+#wrap-list { 
+    width: calc(100vh-240px - 350px);
+    margin-top: 60px;
+    margin-left: calc(240px + 350px);
+    background-color: #170f23;
+    color: white;
+    padding: 24px 36px 86px 24px; 
+    min-height: 100vh;
+}
+
+#wrap-list > p { 
+    font-size: 14px;
+    line-height: 24px;     
+}
+
+#wrap-list > div,ul { 
+    padding: 0px 12px;
+}
+
+
+.title { 
+    display: flex;
+    font-weight:100;
+    font-size: 12px;
+    opacity: 0.6;
+    margin: 24px 0px;
+}
+
+.title > h4:nth-child(1) {
+    width: 50%;
+    padding-left: 14px;
+}
+
+.title > h4:nth-child(2) { 
+    width: 38%;
+} 
+
+.title > h4:nth-child(3) {
+    width: 12%;
+    text-align: right;
+}
+
+.child-mp3 {
+    display: flex;
+    height: 60px;
+    align-items: center;
+    border-radius: 12px;
+    position: relative;
+}
+
+
+
+.child-mp3:hover::after {
+    background-color: rgba(47,39,57,0.4);
+    cursor: pointer;
+    content: '\f004';
+    position:absolute;
+    top: 0;bottom: 0;right: 0;left: 0;
+    font-family: 'Font Awesome 5 Free';
+    display: flex; 
+    justify-content:flex-end; 
+    align-items: center;
+    padding-right: 164px;
+
+}
+
+.child-mp3 > div:nth-child(1) {
+    width: 50%;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+#info-curent-music { 
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 20%;
+    justify-content: flex-start;
+    font-size: 14px;
+    padding-left:42px;
+}
+
+#info-curent-music > div:nth-child(1) { 
+    width: 56px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-right: 14px;
+    
+}
+
+#info-curent-music> div:nth-child(2) { 
+    display: flex;
+    flex-direction: column;
+    height: 85px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 14px;
+}
+
+#info-curent-music > span { 
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    width: 42px;
+
+}
+
+#info-curent-music > div:nth-child(1) > img { 
+    width: 100%;
+}
+
+
+
+#info-curent-music > div:nth-child(2) > span:nth-child(2) { 
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+
+
+#curent-song > div:nth-child(1)  {
+    width: 32px;
+}
+
+#curent-song > div:nth-child(1) > img { 
+    width: 100%;
+}
+
+
+#play { 
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+#play > div:nth-child(1) { 
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#play > div:nth-child(1) > i { 
+    margin: 0px 12px;
+    font-size: 24px;
+}
+
+/* #play > div:nth-child(1) > i:nth-child(2) {
+    border: 1px solid white;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: fl;
+} */
+#play > div:nth-child(1) > i:hover {
+    cursor: pointer;
+}
+
+#play > div:nth-child(2) { 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#wrap-volume { 
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#wrap-volume > button { 
+    width: 32px;
+    height: 32px;
+    /* background-color: #120c1c; */
+}
+
+#show-volume { 
+    width: 20px;
+}
+
+
+.child-mp3 > div:nth-child(1)::before{
+    content: '\f1c7';
+    display: block;
+    font-family: 'Font Awesome 5 Free';
+    opacity: 0.6;
+    height: 100%;
+    line-height: 60px;
+    padding-left: 12px;
+
+}
+
+.child-mp3 > div:nth-child(1) > div:nth-child(2) {
+    display: flex; 
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: 500;
+    height: 100%;
+    justify-content: center;
+}
+
+
+
+.child-mp3 > div:nth-child(1) > div:nth-child(2) > span:nth-child(2) {
+    font-size: 12px;
+    opacity: 0.6;
+    padding-top: 6px;
+    padding-bottom: 2px;
+}
+
+.child-mp3 > div:nth-child(2) {
+    width: 38%;
+    font-size: 12px;
+    opacity: 0.6;
+    height: 100%;
+    line-height: 60px;
+}
+
+.child-mp3 > div:nth-child(3) {
+    width: 12%;
+    text-align: right;
+    font-size: 12px;
+    opacity: 0.6;
+    height: 100%;
+    line-height: 60px; 
+}
+.child-mp3 > div > span { 
+    display: block;
+    height: 100%;
+    line-height: 60px;
+    padding-right: 20px;
+}
+.img-mp3 { 
+    margin: 0px 12px;
+    width: 38px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.img-mp3 > img { 
+    width: 100%;
+}
+
+
+
+input[type="range"] {
+	-webkit-appearance: none;
+	width: 50%;
+	outline: none;
+	height: 2px;
+	margin: 0 15px;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+	-webkit-appearance: none;
+	height: 14px;
+	width: 14px;
+	background: #FF8A65;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+
+#next,#mute,#previous,#play-pause { 
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
+    color: white;
+    background-color: #120c1c; 
+}
+
+#mute { 
+    font-size: 18px;
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-   
- 
- 
 
-
-   <div class="bar">
+    <!-- BAR -->
+    <div class="bar">
         <img src="./logo.png">
         <ul class="list-bar">
             <li class="show-icon-playmusic">
@@ -28,7 +27,7 @@
             <li class="show-icon-playmusic">
                 <i class="fa-solid fa-chart-column"></i>
                 <span>#zingchart</span>
-                
+
             </li>
             <li class="show-icon-playmusic">
                 <i class="fa-solid fa-percent"></i>
@@ -44,12 +43,12 @@
             <li class="show-icon-playmusic">
                 <i class="fa-solid fa-compact-disc"></i>
                 <span>Nhạc Mới</span>
-                
+
             </li>
             <li class="show-icon-playmusic">
                 <i class="fa-solid fa-bars-staggered"></i>
                 <span>Thể Loại</span>
-                
+
             </li>
             <li class="show-icon-playmusic">
                 <i class="fa-solid fa-star"></i>
@@ -59,31 +58,133 @@
                 <i class="fa-solid fa-video"></i>
                 <span>MV</span>
             </li>
-           
+
             <div>
                 <span>Đăng nhập để khám phá playlist dành riêng cho bạn</span>
                 <button>ĐĂNG NHẬP</button>
             </div>
             <div class="color-gradient">
                 <span>Nghe nhạc không quảng cáo cùng kho nhạc VIP</span>
-                <button style="background-color:#ffdb00;color:black" >NÂNG CẤP VIP</button>
+                <button style="background-color:#ffdb00;color:black">NÂNG CẤP VIP</button>
             </div>
             <li id="new-playlist">
                 <i class="fa-solid fa-plus"></i>
                 <span>Tạo Playlist Mới</span>
             </li>
         </ul>
-   </div>
+    </div>
 
-   <div class="header">
-   </div>
+    <!-- HEADER - TÌM KIẾM -->
 
-   <div class="list-mp3">
+    <div class="header">
+        <div>
+            <div>
+                <i class="fa-solid fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+            
+            <input id="search" type="text" placeholder="Nhập Tên Bài Hát">
+        </div>
+        <div>
+            <button>
+                <i class="fa-solid fa-brush"></i>
+            </button>
+            <button>
+                <i class="fa-solid fa-upload"></i>
+            </button>
+            <button>
+                <i class="fa-brands fa-pushed"></i>
+            </button>
+            <button>
+                <i class="fa-solid fa-gear"></i>
+            </button>
+            <button><i class="fa-solid fa-user-lock"></i></button>
+        </div>
+    </div>
 
-   </div>
+    <!-- INTRODUCE -->
 
-   <div class="control">
+    <div id="introduce">
+        <div id="wrap-image">
+            <img class="image-top-100" src="./top100.webp" alt="">
+        </div>
+        <h2>
+            Top 100 Bài Hát Nhạc Trẻ Hay Nhất
+        </h2>
+        <span>Cập nhập:</span>
+        <span>Jack,Sơn Tùng MTP,Trúc Nhân,Thiên An,Thiều Bảo Trâm</span>
 
-   </div>
+        <span>
+            1.8M Người Yêu Thích
+        </span>
+        <button>
+            <i class="fa-solid fa-play"></i>
+            <span>TIẾP TỤC PHÁT</span>
+        </button>
+
+    </div>
+
+    <div id="wrap-list">
+        <p>
+            Lời tựa Top 100 Nhạc Trẻ là danh sách 100 ca khúc hot nhất hiện tại của thể loại Nhạc Trẻ, được Zing MP3 tự
+            động tổng hợp dựa trên thông tin số liệu lượt nghe và lượt chia sẻ của từng bài hát trên phiên bản web và
+            phiên bản Mobile. Dữ liệu sẽ được lấy trong 30 ngày gần nhất và được cập nhật liên tục.
+        </p>
+        <div class="title">
+                <h4>
+                    <i class="fa-solid fa-sort"></i>
+                    <span>BÀI HÁT</span>
+                </h4>
+                <h4>ALBUM</h4>
+                <h4>THỜI GIAN</h4>                
+        </div>
+        <ul id="detail-mp3"></ul>
+    </div>
+
+    <div class="control">
+            <div id="info-curent-music">
+                <div>
+                    <img src="./imagesub.jpg">
+                </div>
+                <div>
+                    <span>Bạc Phận</span>
+                    <span>Jack</span>
+                </div>
+                <span>
+                    <i class="fa-solid fa-heart"></i>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </span>
+            </div>
+        <div id="play">
+            <div>
+                <button id="previous">
+                    <i class="fa-solid fa-backward-step"></i>
+                </button>
+                <button id="play-pause">
+                    <i class="fa-solid fa-play"></i>
+                </button>
+                <button id="next">
+                    <i class="fa-solid fa-forward-step"></i>
+                </button>
+                
+
+            </div>
+            <div>
+                <span id="curent-time">00.00</span>
+                <input id="status-music" value="0" type="range" min="0">
+                <span id="total-time">00.00</span>
+            </div>
+        </div>
+        <div id="wrap-volume">
+            <button id="mute">
+                <i class="fa-solid fa-volume-high"></i>
+            </button>
+           
+            <input value="100" id="volume" type="range" min="0" max="100" >
+            <span id="show-volume">100</span>
+        </div>
+    </div>
+    <script src="./app.js"></script>
 </body>
+
 </html>
