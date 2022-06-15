@@ -2,7 +2,7 @@
 const app = (function(){
     const api = 'https://api.apify.com/v2/key-value-stores/EJ3Ppyr2t73Ifit64/records/LATEST?fbclid=IwAR39d_x0QCUHtb9AQ21dai2Qz_SOgI3KzSlkts-JDarbLey-gvet8jjbY4w'
     
-    
+
     const detailMp3 = document.getElementById('detail-mp3')  //  thẻ ul chứa khu vực mp3 
     const collectChildMp3 = document.getElementsByClassName('child-mp3') // chứa các li (child-mp3)
     const track = document.createElement('audio')
@@ -15,14 +15,18 @@ const app = (function(){
     const showTotalTime = document.getElementById('total-time')
     const showCurentTime = document.getElementById('curent-time')
     const statusMusic = document.getElementById('status-music')
+    const curentImage = document.getElementById('curent-image')
+    const curentSongPlay = document.getElementById('curent-song-play')
+    const curentCreator = document.getElementById('curent-creator')
+    const search = document.getElementById('search')
 
     let data = {}
     let curentInterval = null
-    let curentVolume 
-    let curentTimeMusic = 0
     let curentIndexSong = 0 
+    let previousIndexSong = null // đánh dấu chưa phát bài nào
     let isPlay = null // đánh dấu chưa phát bài nào  
     let isMute = false 
+    let curentVolume 
     
     function demDuHaiSo(number) {
         return  number.toString().padStart(2, '0');
@@ -37,7 +41,6 @@ const app = (function(){
 
     
     const nextMusic = () => { 
-        curentTimeMusic = 0
         if (curentIndexSong != data.length - 1) { 
             curentIndexSong++
             playMusic(curentIndexSong)
@@ -73,6 +76,8 @@ const app = (function(){
                     isPlay = true 
                     removeAndAddClassHtml(btnPlayPause.firstElementChild,'fa-play','fa-pause')
             }
+            else playMusic(indexSongCurent)
+            
         })
     }
 
@@ -96,7 +101,6 @@ const app = (function(){
         })
     }
     const previousMusic = () => { 
-            // curentTimeMusic = 0
             if (curentIndexSong > 0) {  
                 curentIndexSong--  
                 playMusic(curentIndexSong)
@@ -123,9 +127,8 @@ const app = (function(){
             mute()
             changeStatusMusic()
             checkEndMusic()
+            eventSearch()
     }
-
-     
 
     const getData = async (api) => { 
         try { 
@@ -163,15 +166,24 @@ const app = (function(){
             showCurentTime.innerHTML = secondToMinuteSecond(track.currentTime)
         },1000)
     }
+
+
     
     const playMusic = (indexSong)=>{
             track.src = data[indexSong].music
             track.play()
             .then(()=>{
                 isPlay = true
+                if (previousIndexSong) { 
+                    collectChildMp3[previousIndexSong].style.backgroundColor = '#170f23'
+                } 
+                previousIndexSong = curentIndexSong
                 removeAndAddClassHtml(btnPlayPause.firstElementChild,'fa-play','fa-pause')
-                showTotalTime.innerHTML = secondToMinuteSecond(track.duration)
                 showTimeAndStatusDuration()
+                showTotalTime.innerHTML = secondToMinuteSecond(track.duration)
+                collectChildMp3[curentIndexSong].style.backgroundColor = '#231c2d'
+                updateInfoCurent(indexSong)
+                
             })
             .catch((error) => {
                 alert(error)
@@ -182,12 +194,11 @@ const app = (function(){
     const choiceMusic = () => { 
         Array.prototype.forEach.call(collectChildMp3,(childMp3) => { 
             childMp3.addEventListener('click',(event)=>{ 
-                curentIndexSong =event.target.getAttribute('index-song')
+                curentIndexSong = event.target.getAttribute('index-song')
                 playMusic(curentIndexSong)
             })
         })
     }
-
 
     const getChangeVolume = () => { 
         volume.addEventListener('change',(event) => { 
@@ -213,16 +224,33 @@ const app = (function(){
                     </div>   
                 </div>
                 <div>
-                    <span>Thương Em (Single)</span>
+                    <span>${song.creator}</span>
                 </div>
                 <div>
-                    <span>05:00</span>
+                    <span id='duration-${index}'>03.12</span>
                 </div>
             </li>
             `
         })
         detailMp3.innerHTML = html.join('')
     }
+
+    // hàm hiển thị bài hát đang được phát. 
+
+    const updateInfoCurent = (indexSongCurent) => {
+        curentImage.src = data[indexSongCurent].avatar
+        curentCreator.innerHTML = data[indexSongCurent].creator
+        curentSongPlay.innerHTML = data[indexSongCurent].title
+    }
+
+
+    const eventSearch = () => { 
+        search.addEventListener('keyup',(event) => { 
+            
+          
+        })
+    }
+
     return { 
         run:function() {  
             
