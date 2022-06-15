@@ -16,13 +16,12 @@ const app = (function(){
     const showCurentTime = document.getElementById('curent-time')
     const statusMusic = document.getElementById('status-music')
 
-
     let data = {}
-    let curentInterval
+    let curentInterval = null
     let curentVolume 
     let curentTimeMusic = 0
     let curentIndexSong = 0 
-    let isPlay = false 
+    let isPlay = null // đánh dấu chưa phát bài nào  
     let isMute = false 
     
     function demDuHaiSo(number) {
@@ -57,35 +56,38 @@ const app = (function(){
         })
     }
 
+    const removeAndAddClassHtml = (element,classRemove,classAdd) => {
+        element.classList.remove(classRemove)
+        element.classList.add(classAdd)
+    }
+
     const playPauseMusic = () => { 
         btnPlayPause.addEventListener('click',() => { 
             if (isPlay) { 
                 track.pause() 
-                curentTimeMusic = track.currentTime
                 isPlay = false
-                btnPlayPause.firstElementChild.classList.remove('fa-pause')
-                btnPlayPause.firstElementChild.classList.add('fa-play')
+                removeAndAddClassHtml(btnPlayPause.firstElementChild,'fa-pause','fa-play')
             }
-            else { 
-                playMusic(curentIndexSong)
-                btnPlayPause.firstElementChild.classList.remove('fa-play')
-                btnPlayPause.firstElementChild.classList.add('fa-pause')
+            else if (isPlay != null) {  
+                    track.play()
+                    isPlay = true 
+                    removeAndAddClassHtml(btnPlayPause.firstElementChild,'fa-play','fa-pause')
             }
         })
     }
 
+    
+
     const mute = () => { 
         btnMute.addEventListener('click',() => {  
             if(isMute) { 
-                btnMute.firstElementChild.classList.add('fa-volume-high')
-                btnMute.firstElementChild.classList.remove('fa-volume-xmark')
+                removeAndAddClassHtml(btnMute.firstElementChild,'fa-volume-xmark','fa-volume-high')
                 isMute = false 
                 track.volume = curentVolume
                 showVolumeElement.innerHTML = curentVolume*100
             }
             else { 
-                btnMute.firstElementChild.classList.remove('fa-volume-high')
-                btnMute.firstElementChild.classList.add('fa-volume-xmark')
+                removeAndAddClassHtml(btnMute.firstElementChild,'fa-volume-high','fa-volume-xmark')
                 isMute = true
                 curentVolume = track.volume 
                 track.volume = 0 
@@ -94,7 +96,7 @@ const app = (function(){
         })
     }
     const previousMusic = () => { 
-            curentTimeMusic = 0
+            // curentTimeMusic = 0
             if (curentIndexSong > 0) {  
                 curentIndexSong--  
                 playMusic(curentIndexSong)
@@ -112,6 +114,17 @@ const app = (function(){
         })
     } 
 
+    const eventMusic = () => { 
+            choiceMusic()  
+            getChangeVolume()
+            clickNextMusic()
+            clickPreviousMusic()
+            playPauseMusic()
+            mute()
+            changeStatusMusic()
+            checkEndMusic()
+    }
+
      
 
     const getData = async (api) => { 
@@ -120,18 +133,10 @@ const app = (function(){
             data = await dataJSON.json() 
             data = data.songs.top100_VN[0].songs; 
             renderData(data)
-            getEventclickMusic(collectChildMp3)  // Hàm bắt sự kiện người dùng click nhạc. 
-            getChangeVolume(volume)
-            clickNextMusic()
-            clickPreviousMusic()
-            playPauseMusic()
-            mute()
-            changeStatusMusic()
-            checkEndMusic()
-            
+            eventMusic()            
         }
         catch(error){
-            alert(error)
+            console.error(error)
         }
     }
 
@@ -142,26 +147,17 @@ const app = (function(){
     }
 
     const changeStatusMusic = () => { 
-        statusMusic.addEventListener('click',() => { 
-            if (isPlay) { 
+        statusMusic.addEventListener('change',() => { 
                 track.currentTime = statusMusic.value
                 showTimeAndStatusDuration()
-                // clearInterval(curentInterval)
-                // curentInterval = setInterval(() => {
-                //     statusMusic.value = track.currentTime
-                //     showCurentTime.innerHTML = secondToMinuteSecond(track.currentTime)
-                // },1000)
-            }
-            else { 
-                statusMusic.value = 0
-            }
         })
     }
 
-
     function showTimeAndStatusDuration() {
-        statusMusic.setAttribute('max',track.duration) // sữa đổi trạng thái ->
-        clearInterval(curentInterval)
+        statusMusic.max = track.duration
+        if (curentInterval != null) { 
+            clearInterval(curentInterval)
+        }
         curentInterval = setInterval(()=>{
             statusMusic.value = track.currentTime
             showCurentTime.innerHTML = secondToMinuteSecond(track.currentTime)
@@ -169,41 +165,43 @@ const app = (function(){
     }
     
     const playMusic = (indexSong)=>{
-            track.setAttribute('src',data[indexSong].music)
-            track.currentTime = curentTimeMusic
+            track.src = data[indexSong].music
             track.play()
             .then(()=>{
                 isPlay = true
-                btnPlayPause.firstElementChild.classList.remove('fa-play')
-                btnPlayPause.firstElementChild.classList.add('fa-pause')
-                statusMusic.value = 0
-                clearInterval(curentInterval) 
+                removeAndAddClassHtml(btnPlayPause.firstElementChild,'fa-play','fa-pause')
                 showTotalTime.innerHTML = secondToMinuteSecond(track.duration)
                 showTimeAndStatusDuration()
-                // sữa đổi thanh trạng thái -> thay đổi trạng thái vê 0 
             })
-            .catch((err)=>{
-                alert(err)
-                isPlay = false
+            .catch((error) => {
+                alert(error)
+                nextMusic()
             })  
+            
     }
-    const getEventclickMusic = (collectChildMp3) => { 
+    const choiceMusic = () => { 
         Array.prototype.forEach.call(collectChildMp3,(childMp3) => { 
             childMp3.addEventListener('click',(event)=>{ 
-                curentIndexSong =Number(event.target.getAttribute('index-song')) 
+                curentIndexSong =event.target.getAttribute('index-song')
                 playMusic(curentIndexSong)
             })
         })
     }
 
 
-    const getChangeVolume = (volume) => { 
+    const getChangeVolume = () => { 
         volume.addEventListener('change',(event) => { 
-            showVolumeElement.innerHTML = event.target.value
-            track.volume = event.target.value/100 
+            const valumeAfterChange = event.target.value
+            showVolumeElement.innerHTML = valumeAfterChange
+            track.volume = valumeAfterChange/100 
+            if (valumeAfterChange == 0) { // nếu valume điều chỉnh về 0
+                removeAndAddClassHtml(btnMute.firstElementChild,'fa-volume-high','fa-volume-xmark')
+            }
+            else { 
+                removeAndAddClassHtml(btnMute.firstElementChild,'fa-volume-xmark','fa-volume-high')
+            }
         })
     }
-
     const renderData = (data) => { 
         let html = data.map((song,index)=>{ 
             return `
@@ -211,8 +209,7 @@ const app = (function(){
                 <div>
                     <div class="img-mp3"><img src="${song.avatar}"></div>
                     <div>
-                        <span>${song.title}</span>
-                        <span>${song.creator}</span>
+                        <span>${song.title}</span> <span>${song.creator}</span>
                     </div>   
                 </div>
                 <div>
@@ -234,5 +231,6 @@ const app = (function(){
     }
 })(); 
 
-
 app.run()
+
+
