@@ -2,30 +2,29 @@
 const app = (function(){
     const api = 'https://api.apify.com/v2/key-value-stores/EJ3Ppyr2t73Ifit64/records/LATEST?fbclid=IwAR39d_x0QCUHtb9AQ21dai2Qz_SOgI3KzSlkts-JDarbLey-gvet8jjbY4w'
     
-
-    const detailMp3 = document.getElementById('detail-mp3')  //  thẻ ul chứa khu vực mp3 
+    const $id = document.getElementById.bind(document) 
+    const detailMp3 = $id('detail-mp3')  //  thẻ ul chứa khu vực mp3 
+    const volume = $id('volume') 
+    const showVolumeElement = $id('show-volume')  
+    const btnPrevious = $id('previous')
+    const btnPlayPause = $id('play-pause')
+    const btnNext = $id('next')
+    const btnMute = $id('mute')
+    const showTotalTime = $id('total-time')
+    const showCurentTime = $id('curent-time')
+    const statusMusic = $id('status-music')
+    const curentImage = $id('curent-image')
+    const curentSongPlay = $id('curent-song-play')
+    const curentCreator = $id('curent-creator')
+    const search = $id('search')
+    const BoxResult = $id('show-result')
     const collectChildMp3 = document.getElementsByClassName('child-mp3') // chứa các li (child-mp3)
     const track = document.createElement('audio')
-    const volume = document.getElementById('volume') 
-    const showVolumeElement = document.getElementById('show-volume')  
-    const btnPrevious = document.getElementById('previous')
-    const btnPlayPause = document.getElementById('play-pause')
-    const btnNext = document.getElementById('next')
-    const btnMute = document.getElementById('mute')
-    const showTotalTime = document.getElementById('total-time')
-    const showCurentTime = document.getElementById('curent-time')
-    const statusMusic = document.getElementById('status-music')
-    const curentImage = document.getElementById('curent-image')
-    const curentSongPlay = document.getElementById('curent-song-play')
-    const curentCreator = document.getElementById('curent-creator')
-    const search = document.getElementById('search')
-
     let data = {}
     let curentInterval = null
     let curentIndexSong = 0 
-    let previousIndexSong = null // đánh dấu chưa phát bài nào
-    let isPlay = null // đánh dấu chưa phát bài nào  
-    let isMute = false 
+    let isPlay = null 
+    let isMute = false
     let curentVolume 
     
     function demDuHaiSo(number) {
@@ -174,14 +173,9 @@ const app = (function(){
             track.play()
             .then(()=>{
                 isPlay = true
-                if (previousIndexSong) { 
-                    collectChildMp3[previousIndexSong].style.backgroundColor = '#170f23'
-                } 
-                previousIndexSong = curentIndexSong
                 removeAndAddClassHtml(btnPlayPause.firstElementChild,'fa-play','fa-pause')
                 showTimeAndStatusDuration()
                 showTotalTime.innerHTML = secondToMinuteSecond(track.duration)
-                collectChildMp3[curentIndexSong].style.backgroundColor = '#231c2d'
                 updateInfoCurent(indexSong)
                 
             })
@@ -220,7 +214,7 @@ const app = (function(){
                 <div>
                     <div class="img-mp3"><img src="${song.avatar}"></div>
                     <div>
-                        <span>${song.title}</span> <span>${song.creator}</span>
+                        <span class='title-song'>${song.title}</span> <span>${song.creator}</span>
                     </div>   
                 </div>
                 <div>
@@ -243,22 +237,68 @@ const app = (function(){
         curentSongPlay.innerHTML = data[indexSongCurent].title
     }
 
+    // Viết hàm kiểm tra xem có kết quả hay không 
+    const showSongSearch = (resultHtml) => {
+        let elementShow
+        if (resultHtml.length) {
+            elementShow = resultHtml.join('')
+        }
+        else { 
+            // trường hợp không có -> lấy kết quả hiện tại hiển thị lên 
+            elementShow = `<li>${search.value}</li>`
+        }
+        // hien thi len 
+        BoxResult.innerHTML = elementShow
+    }
+
+    
+   
+
 
     const eventSearch = () => { 
-        search.addEventListener('keyup',(event) => { 
-            
-          
-        })
+        search.onkeyup = (event) => { 
+            const valueInput = event.target.value.toLowerCase() 
+            if (valueInput) {
+                let resultMatch = Array.prototype.filter.call(collectChildMp3,(childMp3) => { 
+                    let titleSong = childMp3.querySelector('.title-song').textContent.toLowerCase()
+                    return titleSong.startsWith(valueInput)
+                })
+
+                let resultHtml = resultMatch.map((resultChild) => {
+                    return `<li index-song="${resultChild.getAttribute('index-song')}"
+                        class="result-child"
+                    >${
+                        resultChild.querySelector('.title-song').textContent
+                    }</li>`
+                })
+                showSongSearch(resultHtml)
+                let totalResult = document.getElementsByClassName('result-child')
+                Array.prototype.forEach.call(totalResult,(child) => { 
+                    child.addEventListener('click',() => { 
+                        playMusic(child.getAttribute('index-song'))
+                        BoxResult.innerHTML = ''
+                        search.value = ''
+                    })
+                })
+            }
+            else { 
+                BoxResult.innerHTML = ''
+            }
+        }
     }
+
+    
 
     return { 
         run:function() {  
             
             getData(api)
-        }
+        }, 
+        
     }
 })(); 
 
 app.run()
+
 
 

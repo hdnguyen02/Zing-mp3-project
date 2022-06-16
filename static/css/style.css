@@ -186,13 +186,64 @@ li {
     background-color: #120c1c;
     color: white;
     text-align: center;
-    z-index:11;
+    z-index:10;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0px 24px;
-
 }
+
+.header > div:nth-child(1) {
+    display: flex;
+    height: 60px;
+}
+
+.header > div:nth-child(1) input { 
+    width: 30vw;  
+    border: none;
+    height: 40px;
+    border-radius: 22px;
+    outline: none;
+    padding: 0px 22px;
+    background-color: rgba(47,39,57,0.6);
+    line-height: 60px;
+}
+
+.header > div:nth-child(1) > div { 
+    line-height: 60px;
+    height: 60px;
+}
+
+.header > div:nth-child(1) > div:nth-child(1) {
+    margin-right: 46px;
+}
+
+.header > div:nth-child(1) > div:nth-child(2) {
+    position: relative;
+}
+
+#show-result { 
+    position: absolute;
+    top: 48px;
+    width: 30vw; 
+    background-color:#432275;
+    max-height: 280px;
+    overflow-y: auto;
+    border-radius: 12px;
+}
+#show-result > li { 
+    line-height: 40px;
+    padding-left: 10px;
+    text-align: left;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+#show-result > li:hover { 
+    cursor: pointer;
+}
+
+
 
 ::placeholder { 
     color: white;
@@ -205,12 +256,9 @@ input {
     font-size: 16px;
 }
 
-.header > div:nth-child(1) { 
-    display: flex;
-    width: 50%;
-    align-items: center;
-    justify-content: space-between; 
-}
+
+
+
 
 .header > div:nth-child(1) > input { 
     width: 30vw;  
@@ -220,6 +268,8 @@ input {
     outline: none;
     padding: 0px 22px;
     background-color: rgba(47,39,57,0.6);
+    
+
 }
 
 .header > div:nth-child(1) > div > i { 
@@ -251,7 +301,7 @@ input {
 
 .header > div:nth-child(2) > button > i { 
     color: white;
-}
+} */
 
 #container-list { 
     background-color: #170f23;
@@ -274,7 +324,7 @@ input {
     align-items: center;
     text-align: center;
     position: fixed;
-    z-index: 100;
+    z-index: 5;
     top: 60px;
     left: 240px;
     background-color: #170f23;
